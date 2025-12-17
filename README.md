@@ -1,4 +1,4 @@
-# eec_analysis
+# eec_analysis:  test
 
 Analysis code for the EEC project, in the Heavy Ions group at LLR-CMS, at CERN .
 
