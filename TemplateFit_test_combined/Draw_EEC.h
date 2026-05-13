@@ -79,37 +79,37 @@ void draw_eec_simple(TString fout_name, TFile* foutputPlots, TString &folder, In
 
             // -- Read MC histograms: use qcd sample only 
             TH3D* h3D_bb_rebinnedY = (TH3D*) file->Get("h3D_bb_rebinnedY"); if(! h3D_bb_rebinnedY) cout << "hist does not exist" << endl;
-                h3D_bb_rebinnedY->SetFillStyle(0);
+	    h3D_bb_rebinnedY->SetFillStyle(0);
                 TH1D *h1D_bb = h3D_bb_rebinnedY->ProjectionY(Form("h1D_bb_%d", ibin_pt), 1, mb_bins ,SliceFirstbin_pt, SliceLastbin_pt);
-            TH3D* h3D_b_rebinnedY = (TH3D*) file->Get("h3D_b_rebinnedY"); if(! h3D_b_rebinnedY) cout << "hist does not exist" << endl;
-                 h3D_b_rebinnedY->SetFillStyle(0);
+		TH3D* h3D_b_rebinnedY = (TH3D*) file->Get("h3D_b_rebinnedY"); if(! h3D_b_rebinnedY) cout << "hist does not exist" << endl;
+		h3D_b_rebinnedY->SetFillStyle(0);
                 TH1D *h1D_b = h3D_b_rebinnedY->ProjectionY(Form("h1D_b_%d", ibin_pt), 1, mb_bins ,SliceFirstbin_pt, SliceLastbin_pt);
-            TH3D* h3D_0b_rebinnedY = (TH3D*) file->Get("h3D_0b_rebinnedY"); if(! h3D_0b_rebinnedY) cout << "hist does not exist" << endl;
-                h3D_0b_rebinnedY->SetFillStyle(0);
-                TH1D *h1D_0b = h3D_0b_rebinnedY->ProjectionY(Form("h1D_0b_%d", ibin_pt), 1, mb_bins ,SliceFirstbin_pt, SliceLastbin_pt);
+		TH3D* h3D_0b_rebinnedY = (TH3D*) file->Get("h3D_0b_rebinnedY"); if(! h3D_0b_rebinnedY) cout << "hist does not exist" << endl;
+	    h3D_0b_rebinnedY->SetFillStyle(0);
+	    TH1D *h1D_0b = h3D_0b_rebinnedY->ProjectionY(Form("h1D_0b_%d", ibin_pt), 1, mb_bins ,SliceFirstbin_pt, SliceLastbin_pt);
             
-                // -- Add 2B from bjets 
-                TH3D* h3D_bb_bjet_rebinnedY = (TH3D*) file->Get("h3D_bb_bjet_rebinnedY"); if(! h3D_bb_bjet_rebinnedY) cout << "hist does not exist" << endl;
-                    h3D_bb_bjet_rebinnedY->SetFillStyle(0);
-                TH1D *h1D_bb_bjets = h3D_bb_bjet_rebinnedY->ProjectionY(Form("h1D_bb_bjets_%d", ibin_pt), 1, mb_bins ,SliceFirstbin_pt, SliceLastbin_pt);
-
-                // 2B : MC = qcd + bjet
-                TH1D* h1D_bb_combined =  (TH1D*) h1D_bb->Clone("h1D_bb_combined"); h1D_bb_combined->Add(h1D_bb_bjets); h1D_bb_combined->SetName("2B (MC: qcd+bjet)");
-                    // scale it to qcd integral 
-                        h1D_bb_combined->Scale(1. *h1D_bb->Integral(1, N_dr_bins, "width") /h1D_bb_combined->Integral(1, N_dr_bins, "width"));
-
-            // Sum 1B + 0B as total bkg 
-            TH1D* h1D_b_0b = (TH1D*) h1D_b->Clone("h1D_b_0b"); h1D_b_0b->Add(h1D_0b);
-
-                // set their styles 
-                h1D_bb_combined->SetFillStyle(0); h1D_bb->SetFillStyle(0); h1D_bb_bjets->SetFillStyle(0);h1D_b->SetFillStyle(0); h1D_0b->SetFillStyle(0); h1D_b_0b->SetFillStyle(0);
-                h1D_bb_combined->SetLineColor(kCyan+2); h1D_bb_combined ->SetLineWidth(3);
-                h1D_bb->SetLineColor(kBlue); h1D_bb_bjets->SetLineColor(kBlue+ 4);
-
-                h1D_b_0b->SetLineColor(kMagenta + 1); h1D_b_0b ->SetLineWidth(3);
-                h1D_b->SetLineColor(kOrange+2); h1D_b ->SetLineWidth(2);
-                h1D_0b->SetLineColor(kYellow +2); h1D_0b ->SetLineWidth(2);
-
+	    // -- Add 2B from bjets 
+	    TH3D* h3D_bb_bjet_rebinnedY = (TH3D*) file->Get("h3D_bb_bjet_rebinnedY"); if(! h3D_bb_bjet_rebinnedY) cout << "hist does not exist" << endl;
+	    h3D_bb_bjet_rebinnedY->SetFillStyle(0);
+	    TH1D *h1D_bb_bjets = h3D_bb_bjet_rebinnedY->ProjectionY(Form("h1D_bb_bjets_%d", ibin_pt), 1, mb_bins ,SliceFirstbin_pt, SliceLastbin_pt);
+	    
+	    // 2B : MC = qcd + bjet
+	    TH1D* h1D_bb_combined =  (TH1D*) h1D_bb->Clone("h1D_bb_combined"); h1D_bb_combined->Add(h1D_bb_bjets); h1D_bb_combined->SetName("2B (MC: qcd+bjet)");
+	    // scale it to qcd integral 
+	    h1D_bb_combined->Scale(1. *h1D_bb->Integral(1, N_dr_bins, "width") /h1D_bb_combined->Integral(1, N_dr_bins, "width"));
+	    
+	    // Sum 1B + 0B as total bkg 
+	    TH1D* h1D_b_0b = (TH1D*) h1D_b->Clone("h1D_b_0b"); h1D_b_0b->Add(h1D_0b);
+	    
+	    // set their styles 
+	    h1D_bb_combined->SetFillStyle(0); h1D_bb->SetFillStyle(0); h1D_bb_bjets->SetFillStyle(0);h1D_b->SetFillStyle(0); h1D_0b->SetFillStyle(0); h1D_b_0b->SetFillStyle(0);
+	    h1D_bb_combined->SetLineColor(kCyan+2); h1D_bb_combined ->SetLineWidth(3);
+	    h1D_bb->SetLineColor(kBlue); h1D_bb_bjets->SetLineColor(kBlue+ 4);
+	    
+	    h1D_b_0b->SetLineColor(kMagenta + 1); h1D_b_0b ->SetLineWidth(3);
+	    h1D_b->SetLineColor(kOrange+2); h1D_b ->SetLineWidth(2);
+	    h1D_0b->SetLineColor(kYellow +2); h1D_0b ->SetLineWidth(2);
+	    
 
 
             // Draw canvas
